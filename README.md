@@ -1,7 +1,7 @@
 # 1. What is RDMA ?
 RDMA is Remote Direct Memory Access. 
 But not all of engineers can understand it well because RDMA itself is very difficult to understand. I wrote it down step by step to understand it. 
-Before talking about RDMA, we should study how DMA works between devices and the problems. 
+Before talking about RDMA, we should study how DMA works and its problems. 
 See also the URL below:
 (https://github.com/developer-onizuka/what_is_DMA/blob/main/README.md)
 
