@@ -20,10 +20,10 @@ Before copying, some processes call kernel API for translation from Virtual addr
           +----------+
           |          |
           |          |
-          +----------+ 0xdfffffff
+          +----------+
           |XXXXXXXXXX|
    +----- |XXXXXXXXXX|
-   |      +----------+ 0xd0000000 (GPU BAR#1)
+   |      +----------+ 0xf0000000 (NIC BAR#1)
    |      |          |                                          Kernel Space (Virtual Address)
  Copy     |          |                                          +----------+
  (DMA)    |          |                                          |          |
