@@ -13,8 +13,8 @@ Of cource, copy needs "Physical Address". Who translates the address from Virtua
 
 Before copying, some processes call kernel API for translation from Virtual address to Physical address because Only the kernel knows the mapping between Virtual Address and Physical Address. After this translation, physical copies will be perform by hardware.
 
-Guess how many interrupts happens if you are using so high throughput NIC ? Today, there are so many High performance NIC from Mellanox and Intel... 
-The problem is heavy interrupts will bother CPU workload which is not dedicated to I/O such as NIC. CPU resource such as TLB is very very precious. 
+Guess how many interrupts happens if you are using so high throughput NIC ? Today, there are so many High performance NICs from Mellanox and Intel... 
+The problem is heavy interrupts which introduce additional CPU workloads. CPU is not dedicated to I/O such as NIC and its resources such as TLB are very very precious. 
    
 ```
           Physical Memory
