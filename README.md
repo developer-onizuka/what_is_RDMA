@@ -5,7 +5,7 @@ Before talking about RDMA, we should study how DMA works between devices and the
 See also the URL below:
 (https://github.com/developer-onizuka/what_is_DMA/blob/main/README.md)
 
-# 2. Problems of traditional DMA:
+# 2. Problems of traditional DMA
 DMA is a copy between host memory and device's memory. As you can see below, the copy from device's BAR space to a physical memory address in host machine.  
 After DMA between host and device, Device's DMA Engine interrupts to CPU so that CPU can start copying this DMAed data (it's still in kernel space) to the user space by CPU load, which is not DMA. Next, the space in kernel is released for the next DMA operation, which we know it as flow control of DMA.
 
