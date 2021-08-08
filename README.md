@@ -69,10 +69,10 @@ Step 1. User program creates its own space as virtual address thru malloc().
           |          |
           |          |                                   
           |          |                                          +----------+
-          +----------+                                          |          |
           |          |                                          |          |
           |          |                                          |          |
-          +----------+ User Space (Physical Address)            +----------+ 0xc0004000
+          |          |                                          |          |
+          |          |                                          +----------+ 0xc0004000
           |          |                                          User Space (Virtual Address)
           |          |
           +----------+ 0x00000000
@@ -105,7 +105,7 @@ Step 2. User program asks the space registerd thru verbs API so that the kernel 
           |          |
           +----------+ 0x00000000
 ```
-Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space.
+Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
 ---
 ```
           Physical Memory
@@ -133,20 +133,20 @@ Step 3. User program makes some controll resources. One of resource is PTE which
           |          |
           +----------+ 0x00000000
 ```
-
-Step 1. Data comes into the NIC logic and put it on BAR space on NIC.
+Step 4. Data comes into the NIC logic and put it on BAR space on NIC. But the DMA engine doesn't know where it should do DMA to !
+---
 ```
           Physical Memory
           +----------+            +---------- Data From Outside
           |          |            |
-          |          |            |                             Kernel Space (RDMA Controll resources)
+          |          |            |                             RDMA Controll resources
           +----------+            |                             +----------+
           |          |            |                             |          |
-          |XXXXXXXXXX| <----------+                             |          |
-          +----------+ 0xf0000000 (NIC BAR#1)                   |          |
-          |          |                                          +----------+                       
-          |          |
-          |          | 
+   +----- |XXXXXXXXXX| <----------+                             |          |
+   |      +----------+ 0xf0000000 (NIC BAR#1)                   | PTE#1    |
+   |      |          |                                          +----------+                       
+   V      |          |
+  ???     |          | 
           |          | 
           |          | 
           |          |
@@ -155,38 +155,10 @@ Step 1. Data comes into the NIC logic and put it on BAR space on NIC.
           |          |                                          +----------+
           +----------+                                          |          |
           |          |                                          |          |
-          |          |                                          |          |
-          +----------+ User Space (Physical Address)            +----------+
+          |          | <================Mapping===============> |          |
+          +----------+ User Space (Physical Address)            +----------+ 0xc0004000
           |          |                                          User Space (Virtual Address)
           |          |
           +----------+ 0x00000000
 ```
 
-Step 2.
-```
-          Physical Memory
-          +----------+
-          |          |
-          |          |                                          Kernel Space (IB resource)
-          +----------+                                          +----------+
-          |XXXXXXXXXX|                                          |          |
-   +----- |XXXXXXXXXX|                                          |          |
-   |      +----------+ 0xf0000000 (NIC BAR#1)                   |          |
-   |      |          |                                          +----------+                       
- Copy     |          |
- (DMA)    |          | 
-   |      |          | 
-   |      |          | 
-   |      |          |
-   |      |          |
-   |      |          |                                   
-   |      |          |                                          +----------+
-   |      +----------+                                          |          |
-   |      |XXXXXXXXXX|                                          |XXXXXXXXXX|
-   +----> |XXXXXXXXXX| <================Mapping===============> |XXXXXXXXXX|
-          +----------+ User Space (Physical Address)            +----------+
-          |          |                                          User Space (Virtual Address)
-          |          |
-          +----------+ 0x00000000
-
-```
