@@ -74,7 +74,7 @@ Step 1. User program creates its own space as virtual address thru malloc().
           |          |
           +----------+ 0x00000000
 ```
-Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "PIN". User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the opration of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
+Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "PIN". User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the operation of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
 ---
 ```
           Physical Memory
