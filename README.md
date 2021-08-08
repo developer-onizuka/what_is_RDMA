@@ -151,7 +151,7 @@ Step 4. Data comes into the NIC logic and put it on BAR space on NIC. But the DM
           |          | 
           |          |
           |          |
-          |          |                                   
+          |          |                                          PINNED
           |          |                                          +----------+
           +----------+                                          |          |
           |          |                                          |          |
@@ -179,7 +179,7 @@ Step 5. DMA Engine starts fetching the PTE#1 from certain space from host memory
    |      |          | 
    |      |          |
    |      |          |
-   |      |          |                                   
+   |      |          |                                          PINNED
    |      |          |                                          +----------+
    |      +----------+                                          |          |
    |      |          |                                          |          |
