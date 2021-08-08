@@ -159,7 +159,7 @@ Step 4. DMA Engine starts fetching the PTE#1 from certain space from host memory
           |          |
           +----------+ 0x00000000
 ```
-Step 5. DMA Engine creates the Completion Queue(CQE#1) instead of interruptting to the kernel. User program polls until a CQE is created. This is the end of RDMA step. After completion, the data of BAR space can be removed (by incrementing the pointer) and NIC's receiver is ready for receiving next packets. Each resource in host memory such as PTE or CQE will be destroyed and unpinned if subsequent process does not use these resources. The space which is already registered may be used again so that we can prevent from heavy process of memory registration.
+Step 5. DMA Engine creates the Completion Queue(CQE#1) instead of interruptting to the kernel. User program polls until a CQE is created. This is the end of RDMA step. After completion, the data of BAR space can be removed (by incrementing the pointer) and NIC's receiver is ready for receiving next packets. Each resource in host memory such as PTE or CQE will be destroyed and unpinned if subsequent process does not use these resources. The space already registered may be used again so that we can prevent from heavy process of memory registration.
 ---
 ```
           Physical Memory
