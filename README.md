@@ -75,8 +75,9 @@ User program creates its own space as virtual address thru malloc().
           |          |
           +----------+ 0x00000000
 ```
-Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "PIN". User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the operation of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
+Step 2. 
 ---
+User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "PIN". User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the operation of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
 ```
           Physical Memory
           +----------+            
@@ -104,8 +105,9 @@ Step 2. User program asks the space registerd thru verbs API so that the kernel 
           +----------+ 0x00000000
 ```
 
-Step 3. Data comes into the NIC logic and put it on BAR space on NIC. But the DMA engine doesn't know where it should do DMA to!
+Step 3. 
 ---
+Data comes into the NIC logic and put it on BAR space on NIC. But the DMA engine doesn't know where it should do DMA to!
 ```
           Physical Memory
           +----------+            +---------- Data From Outside
@@ -132,8 +134,9 @@ Step 3. Data comes into the NIC logic and put it on BAR space on NIC. But the DM
           |          |
           +----------+ 0x00000000
 ```
-Step 4. DMA Engine starts fetching the PTE#1 from certain space from host memory so that it can know where it does DMA. Then, DMA Engine can copy between NIC and user space without addtional copys. But how does the user space understand the completion of copy without kernel interventions??? This is a new problem while we  don't use kernel features which we call "interrupts".
+Step 4. 
 ---
+DMA Engine starts fetching the PTE#1 from certain space from host memory so that it can know where it does DMA. Then, DMA Engine can copy between NIC and user space without addtional copys. But how does the user space understand the completion of copy without kernel interventions??? This is a new problem while we  don't use kernel features which we call "interrupts".
 ```
           Physical Memory
           +----------+            +---------- Data From Outside
@@ -160,8 +163,9 @@ Step 4. DMA Engine starts fetching the PTE#1 from certain space from host memory
           |          |
           +----------+ 0x00000000
 ```
-Step 5. DMA Engine creates the Completion Queue(CQE#1) instead of interruptting to the kernel. User program polls until a CQE is created. This is the end of RDMA step. After completion, the data of BAR space can be removed (by incrementing the pointer) and NIC's receiver is ready for receiving next packets. Each resource in host memory such as PTE or CQE will be destroyed and unpinned if subsequent process does not use these resources. The space already registered may be used again so that we can prevent from heavy process of memory registration.
+Step 5. 
 ---
+DMA Engine creates the Completion Queue(CQE#1) instead of interruptting to the kernel. User program polls until a CQE is created. This is the end of RDMA step. After completion, the data of BAR space can be removed (by incrementing the pointer) and NIC's receiver is ready for receiving next packets. Each resource in host memory such as PTE or CQE will be destroyed and unpinned if subsequent process does not use these resources. The space already registered may be used again so that we can prevent from heavy process of memory registration.
 ```
           Physical Memory
           +----------+            
