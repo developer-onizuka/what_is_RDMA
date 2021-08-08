@@ -77,7 +77,7 @@ Step 1. User program creates its own space as virtual address thru malloc().
           |          |
           +----------+ 0x00000000
 ```
-Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "Pin".
+Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "PIN".
 ---
 ```
           Physical Memory
