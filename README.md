@@ -105,7 +105,7 @@ Step 2. User program asks the space registerd thru verbs API so that the kernel 
           |          |
           +----------+ 0x00000000
 ```
-Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
+Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the opration of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
 ---
 ```
           Physical Memory
@@ -161,4 +161,31 @@ Step 4. Data comes into the NIC logic and put it on BAR space on NIC. But the DM
           |          |
           +----------+ 0x00000000
 ```
-
+Step 5. DMA Engine starts fetching the PTE#1 from certain space from host memory so that it can know where it does DMA. Then, DMA Engine can copy between NIC and user space, directry.
+---
+```
+          Physical Memory
+          +----------+            +---------- Data From Outside
+          |          |            |
+          |          |            |                             RDMA Controll resources
+          +----------+            |                             +----------+
+          |          |            |                             |          |
+   +----- |XXXXXXXXXX| <----------+                             |          |
+   |      +----------+ 0xf0000000 (NIC BAR#1)                   | PTE#1    |
+   |      |          |                                          +--+-------+                       
+   V      |          |                                             |
+  ??? <------------------------------------------------------------+ 
+   |      |          | 
+   |      |          | 
+   |      |          |
+   |      |          |
+   |      |          |                                   
+   |      |          |                                          +----------+
+   |      +----------+                                          |          |
+   |      |          |                                          |          |
+   +----> |          | <================Mapping===============> |          |
+          +----------+ User Space (Physical Address)            +----------+ 0xc0004000
+          |          |                                          User Space (Virtual Address)
+          |          |
+          +----------+ 0x00000000
+```
