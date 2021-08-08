@@ -83,34 +83,6 @@ Step 2. User program asks the space registerd thru verbs API so that the kernel 
           Physical Memory
           +----------+            
           |          |             
-          |          |
-          +----------+
-          |          | 
-          |          | 
-          +----------+ 0xf0000000 (NIC BAR) 
-          |          |                        
-          |          |
-          |          | 
-          |          | 
-          |          | 
-          |          |
-          |          |
-          |          |                                          PINNED
-          |          |                                          +----------+
-          +----------+                                          |          |
-          |          |                                          |          |
-          |          | <================Mapping===============> |          |
-          +----------+ User Space (Physical Address)            +----------+ 0xc0004000
-          |          |                                          User Space (Virtual Address)
-          |          |
-          +----------+ 0x00000000
-```
-Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the opration of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
----
-```
-          Physical Memory
-          +----------+            
-          |          |             
           |          |                                          RDMA Controll resources
           +----------+                                          +----------+
           |          |                                          |          |
@@ -133,6 +105,9 @@ Step 3. User program makes some controll resources. One of resource is PTE which
           |          |
           +----------+ 0x00000000
 ```
+Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space. We call this operation "Memory Registration". PTE gonna be created in the background of the opration of Memory Registration. But please understand the Memory Registration is very heavy operation, so user should understand it for tuning performances. These are almost everything which the user program should do for perspectives of kernel bypass before a packet arriving.
+---
+
 Step 4. Data comes into the NIC logic and put it on BAR space on NIC. But the DMA engine doesn't know where it should do DMA to !
 ---
 ```
