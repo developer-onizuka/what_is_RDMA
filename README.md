@@ -173,8 +173,8 @@ DMA Engine creates the Completion Queue(CQE#1) instead of interruptting to the k
           |          |                                          RDMA Controll resources
           +----------+                                          +----------+
           |          | <--- next pointer to receive             |          |
-          |XXXXXXXXXX|                                          | CQE#1    | <---Polling by user program
-          +----------+ 0xf0000000 (NIC BAR#1)                   | PTE#1    |
+          |XXXXXXXXXX|                                          | CQE#1    | <---Polling by
+          +----------+ 0xf0000000 (NIC BAR#1)                   | PTE#1    |     user program
           |          |                                          +----------+                       
           |          |                                              
           |          |
