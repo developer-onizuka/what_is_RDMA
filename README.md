@@ -11,7 +11,7 @@ DMA is a copy between host memory and device's memory. As you can see below, the
 Please note the copy from the kernel space to the user space was done by some processes with CPU load. It means the copy was performed thru "Virtual Address". 
 Of cource, copy needs "Physical Address". Who translates the address from Virtual address to Physical address ??? Yes, Kernel does.
 
-Before copying, some processes call kernel API for translation from Virtual address to Physical address because Only the kernel knows the mapping between Virtual Address and Physical Address. After this translation, physical copies will be perform by hardware.
+For copying after DMA, some processes (TCP/IP and NIC driver) call kernel API for translation from Virtual address to Physical address because Only the kernel knows the mapping between Virtual Address and Physical Address. After this translation, physical copies will be perform by hardware.
 
 Guess how many interrupts happens if you are using so high throughput NIC? Today, there are so many High performance NICs from Mellanox and Intel... 
 The problem is these heavy interrupts itself which introduce additional CPU workloads. CPU is not dedicated to I/O such as NIC but for the purpuses including user program's processing. In addtion, its resources such as TLB are very very precious. 
