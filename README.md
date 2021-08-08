@@ -46,8 +46,9 @@ The problem is these heavy interrupts itself which introduce additional CPU work
 # 3. Zero Copy (Kernel Bypass)
 How can we come over the problem of traditional DMA? One of ideas is bypassing kernel so that any context switch never happens. The user application is programmed through virtual address because users can not refer the physical address. The user program can let the RDMA device such as InfiniBand HCA or Mellanox NIC  know user space's physical address by using "verbs API" in the user program. But RDMA is one of DMA and the difference is what it can translate the address itself by its hardware logic.
 
-Step 1. User program creates its own space as virtual address thru malloc().
+Step 1. 
 ---
+User program creates its own space as virtual address thru malloc().
 ```
           Physical Memory
           +----------+            
