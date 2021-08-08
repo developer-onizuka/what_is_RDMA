@@ -14,7 +14,7 @@ Of cource, copy needs "Physical Address". Who translates the address from Virtua
 Before copying, some processes call kernel API for translation from Virtual address to Physical address because Only the kernel knows the mapping between Virtual Address and Physical Address. After this translation, physical copies will be perform by hardware.
 
 Guess how many interrupts happens if you are using so high throughput NIC ? Today, there are so many High performance NICs from Mellanox and Intel... 
-The problem is heavy interrupts which introduce additional CPU workloads. CPU is not dedicated to I/O such as NIC and its resources such as TLB are very very precious. 
+The problem is heavy interrupts which introduce additional CPU workloads. CPU is not only dedicated to I/O such as NIC and its resources such as TLB are very very precious. 
    
 ```
           Physical Memory
@@ -41,4 +41,35 @@ The problem is heavy interrupts which introduce additional CPU workloads. CPU is
           |          |                                          User Space (Virtual Address)
           |          |
           +----------+ 0x00000000
+```
+
+# 3. Zero Copy
+RDMA is one of DMA
+
+```
+          Physical Memory
+          +----------+
+          |          |
+          |          |
+          +----------+
+          |XXXXXXXXXX|
+   +----- |XXXXXXXXXX|
+   |      +----------+ 0xf0000000 (NIC BAR#1)
+   |      |          |                                          Kernel Space (Virtual Address)
+ Copy     |          |                                          +----------+
+ (DMA)    |          |                                          |          |
+   |      |          |                                          |          | 
+   |      |          |                                          |          |
+   |      |          |                                          |          |
+   |      |          |                                          +----------+
+   |      |          |                                   
+   |      |          |                                          +----------+
+   |      +----------+                                          |          |
+   |      |XXXXXXXXXX|                                          |XXXXXXXXXX|
+   +----> |XXXXXXXXXX| <================Mapping===============> |XXXXXXXXXX|
+          +----------+ User Space (Physical Address)            +----------+
+          |          |                                          User Space (Virtual Address)
+          |          |
+          +----------+ 0x00000000
+
 ```
