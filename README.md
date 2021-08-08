@@ -44,24 +44,57 @@ The problem is heavy interrupts which introduce additional CPU workloads. CPU is
 ```
 
 # 3. Zero Copy
+How can we come over the problem of traditional DMA ? One of ideas is bypassing kernel so that any context switch never happens. The user application is programmed through virtual address because users can not refer the physical address.
+
+InfiniBand or some other RDMA NIC 
 RDMA is one of DMA
 
+Step 1. Data comes into the NIC logic and put it on BAR space on NIC.
+```
+          Physical Memory
+          +----------+            +---------- Data From Outside
+          |          |            |
+          |          |            |                             Kernel Space (RDMA Controll resources)
+          +----------+            |                             +----------+
+          |          |            |                             |          |
+          |XXXXXXXXXX| <----------+                             |          |
+          +----------+ 0xf0000000 (NIC BAR#1)                   |          |
+          |          |                                          +----------+                       
+          |          |
+          |          | 
+          |          | 
+          |          | 
+          |          |
+          |          |
+          |          |                                   
+          |          |                                          +----------+
+          +----------+                                          |          |
+          |          |                                          |          |
+          |          |                                          |          |
+          +----------+ User Space (Physical Address)            +----------+
+          |          |                                          User Space (Virtual Address)
+          |          |
+          +----------+ 0x00000000
+
+```
+
+Step 2.
 ```
           Physical Memory
           +----------+
           |          |
-          |          |
-          +----------+
-          |XXXXXXXXXX|
-   +----- |XXXXXXXXXX|
-   |      +----------+ 0xf0000000 (NIC BAR#1)
-   |      |          |                                          Kernel Space (Virtual Address)
- Copy     |          |                                          +----------+
- (DMA)    |          |                                          |          |
-   |      |          |                                          |          | 
-   |      |          |                                          |          |
-   |      |          |                                          |          |
-   |      |          |                                          +----------+
+          |          |                                          Kernel Space (IB resource)
+          +----------+                                          +----------+
+          |XXXXXXXXXX|                                          |          |
+   +----- |XXXXXXXXXX|                                          |          |
+   |      +----------+ 0xf0000000 (NIC BAR#1)                   |          |
+   |      |          |                                          +----------+                       
+ Copy     |          |
+ (DMA)    |          | 
+   |      |          | 
+   |      |          | 
+   |      |          |
+   |      |          |
    |      |          |                                   
    |      |          |                                          +----------+
    |      +----------+                                          |          |
