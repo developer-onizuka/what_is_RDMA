@@ -50,16 +50,17 @@ InfiniBand or some other RDMA NIC
 RDMA is one of DMA
 
 Step 1. User program creates its own space as virtual address thru malloc().
+---
 ```
           Physical Memory
           +----------+            
           |          |             
-          |          |                                          Kernel Space (RDMA Controll resources)
-          +----------+                                          +----------+
-          |          |                                          |          |
-          |          |                                          |          |
-          +----------+ 0xf0000000 (NIC BAR)                     |          |
-          |          |                                          +----------+                       
+          |          | 
+          +----------+ 
+          |          |
+          |          | 
+          +----------+ 0xf0000000 (NIC BAR) 
+          |          |                       
           |          |
           |          | 
           |          | 
@@ -76,18 +77,18 @@ Step 1. User program creates its own space as virtual address thru malloc().
           |          |
           +----------+ 0x00000000
 ```
-
 Step 2. User program asks the space registerd thru verbs API so that the kernel could not swap it out to disk. We call it "Pin".
+---
 ```
           Physical Memory
           +----------+            
           |          |             
-          |          |                                          RDMA Controll resources
-          +----------+                                          +----------+
-          |          |                                          |          |
-          |          |                                          |          |
-          +----------+ 0xf0000000 (NIC BAR)                     |          |
-          |          |                                          +----------+                       
+          |          |
+          +----------+
+          |          | 
+          |          | 
+          +----------+ 0xf0000000 (NIC BAR) 
+          |          |                        
           |          |
           |          | 
           |          | 
@@ -105,6 +106,7 @@ Step 2. User program asks the space registerd thru verbs API so that the kernel 
           +----------+ 0x00000000
 ```
 Step 3. User program makes some controll resources. One of resource is PTE which is for translation table between physical address and virtual address of user program space.
+---
 ```
           Physical Memory
           +----------+            
