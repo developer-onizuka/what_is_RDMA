@@ -183,7 +183,7 @@ Step 5. DMA Engine starts fetching the PTE#1 from certain space from host memory
    |      |          |                                          +----------+
    |      +----------+                                          |          |
    |      |          |                                          |          |
-   +----> |          | <================Mapping===============> |          |
+   +----> |XXXXXXXXXX| <================Mapping===============> |XXXXXXXXXX|
           +----------+ User Space (Physical Address)            +----------+ 0xc0004000
           |          |                                          User Space (Virtual Address)
           |          |
