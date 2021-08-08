@@ -35,8 +35,8 @@ The problem is heavy interrupts which introduce additional CPU workloads. CPU is
           |          | (Physical Address)                                        Copy
           |          |                                          +----------+     (CPU)
           +----------+                                          |          |      |
-          |XXXXXXXXXX|                                          |XXXXXXXXXX| <----+
-          |XXXXXXXXXX| <================Mapping===============> |XXXXXXXXXX|
+          |XXXXXXXXXX|                                          |XXXXXXXXXX|      |
+          |XXXXXXXXXX| <================Mapping===============> |XXXXXXXXXX| <----+
           +----------+ User Space (Physical Address)            +----------+
           |          |                                          User Space (Virtual Address)
           |          |
