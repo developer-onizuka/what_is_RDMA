@@ -131,7 +131,7 @@ Step 3. Data comes into the NIC logic and put it on BAR space on NIC. But the DM
           |          |
           +----------+ 0x00000000
 ```
-Step 4. DMA Engine starts fetching the PTE#1 from certain space from host memory so that it can know where it does DMA. Then, DMA Engine can copy between NIC and user space without addtional copys. But how does the user space understand the completion of copy without kernel interventions ??? This is a new problem while we  don't use kernel function which we call "interrupts".
+Step 4. DMA Engine starts fetching the PTE#1 from certain space from host memory so that it can know where it does DMA. Then, DMA Engine can copy between NIC and user space without addtional copys. But how does the user space understand the completion of copy without kernel interventions ??? This is a new problem while we  don't use kernel features which we call "interrupts".
 ---
 ```
           Physical Memory
